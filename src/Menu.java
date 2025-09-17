@@ -1,19 +1,42 @@
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
-public class Menu {
-    ArrayList<String> menu = new ArrayList<>();
-    ArrayList<Integer> prices = new ArrayList<>();
+class Menu {
+    private List<MenuItem> menuList = new ArrayList<>();
+    private List<MenuItem> ordersList = new ArrayList<>();
 
-    public void addToMenu(String course, int price) {
-        menu.add(course);
-        prices.add(price); // int > Integer konverterar automatiskt (= autoboxing)
+    public Menu() {}
+
+    public void addToMenu(MenuItem menuItem) {
+        menuList.add(menuItem);
     }
 
-    public void printMenu() {
-        System.out.println("---MENY---");
+    public void removeFromMenu(String dish) {
+        for(int i = 0; i < menuList.size(); i++) {
+            MenuItem menuItem = menuList.get(i);
+            if(Objects.equals(menuItem.getDish(), dish)) {
+                menuList.remove(i);
+                break;
+            } else {
+                System.out.println("Menu item was not found");
+            }
+        }
+        System.out.printf("%s was removed from the menu", dish);
+    }
 
-        for(int i = 0; i < menu.size(); i++) {
-            System.out.printf("%s  %d:-%n", menu.get(i), prices.get(i));
+    public void getMenu() {
+        System.out.println("--- MENU ---");
+        for(MenuItem menuItem : menuList) {
+            System.out.printf("%s___%s:-%n", menuItem.getDish(), menuItem.getPrice());
         }
     }
+
+    public void placeOrder() {
+
+    }
+    public void getOrder() {}
+    public void removeOrder() {}
+
+
 }
