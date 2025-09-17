@@ -4,7 +4,6 @@ import java.util.Objects;
 
 class Menu {
     private List<MenuItem> menuList = new ArrayList<>();
-    private List<MenuItem> ordersList = new ArrayList<>();
 
     public Menu() {}
 

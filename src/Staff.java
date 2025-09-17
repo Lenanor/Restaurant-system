@@ -5,12 +5,12 @@ import java.util.Scanner;
 
 class Staff {
     private List<Employee> staffList;
-    private PrintMenu printMenu;
+    private InputHandler inputHandler;
     private Scanner scanner = new Scanner(System.in);
 
     public Staff() {
         this.staffList = new ArrayList<>();
-        this.printMenu = new PrintMenu();
+        this.inputHandler = new InputHandler();
     }
 
     public void getStaffList() {
@@ -27,7 +27,8 @@ class Staff {
     public void removeStaff(String id) {
         for(int i = 0; i < staffList.size(); i++) {
             Employee employee = staffList.get(i);
-            if(Objects.equals(employee.getId(), id)) {
+
+            if(employee.getId().equals(id)) {
                 staffList.remove(i);
                 break;
             }
@@ -35,23 +36,25 @@ class Staff {
     }
 
     public void run() {
-        printMenu.printStaffMenu();
+        System.out.println("--- STAFF MENU ---");
+        System.out.println("1. Display staff list");
+        System.out.println("2. Add employee");
+        System.out.println("3. Remove employee");
 
-        int staffChoice = scanner.nextInt();
-        scanner.nextLine();
+        int staffChoice = inputHandler.getIntInput(1, 3);
 
         if(staffChoice == 1) {
             getStaffList();
         } else if (staffChoice == 2) {
             getStaffList();
             System.out.println("Add id:");
-            String id = scanner.nextLine();
+            String id = inputHandler.getStringInput();
             System.out.println("Add name:");
-            String name = scanner.nextLine();
+            String name = inputHandler.getStringInput();
             System.out.println("Add last name");
-            String lastName = scanner.nextLine();
+            String lastName = inputHandler.getStringInput();
             System.out.println("Add phone number:");
-            String phone = scanner.nextLine();
+            String phone = inputHandler.getStringInput();
 
             addStaff(new Employee(id, name, lastName, phone));
             getStaffList();
