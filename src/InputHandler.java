@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class InputHandler {
-    private static Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
 
     public String getStringInput() {
         while (true) {

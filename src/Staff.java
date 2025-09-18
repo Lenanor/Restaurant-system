@@ -50,7 +50,7 @@ class Staff {
 
             if(staffChoice == 1) {
                 getStaffList();
-                scanner.nextLine();
+                System.out.println();
             } else if (staffChoice == 2) {
                 getStaffList();
                 System.out.println("Add id:");
@@ -63,12 +63,12 @@ class Staff {
                 String phone = inputHandler.getStringInput();
 
                 addStaff(new Employee(id, name, lastName, phone));
-                scanner.nextLine();
+                System.out.println();
             } else if(staffChoice == 3) {
                 System.out.println("Add id of employee to remove:");
                 String s = inputHandler.getStringInput();
                 removeStaff(s);
-                scanner.nextLine();
+                System.out.println();
             } else if (staffChoice == 4) {
                 return;
             }

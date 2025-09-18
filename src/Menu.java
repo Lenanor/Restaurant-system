@@ -5,11 +5,29 @@ import java.util.List;
 class Menu {
     private final List<MenuItem> menuList = new ArrayList<>();
     private final InputHandler inputHandler = new InputHandler();
+    private final OrderManager orderManager;
 
-    public Menu() {
+
+    public Menu(OrderManager orderManager) {
+        this.orderManager = orderManager;
         menuList.add(new MenuItem("Lasagna", 130));
         menuList.add(new MenuItem("Chili", 120));
-        menuList.add(new MenuItem("Crispy Tofu", 150));
+        menuList.add(new MenuItem("Tofu", 150));
+    }
+
+    public void displayMenu() {
+        System.out.println("--- RESTAURANT MENU ---");
+
+        if(menuList.isEmpty()) {
+            System.out.println("No dishes are added yet!");
+            return;
+        }
+
+        int count = 1;
+        for(MenuItem menuItem : menuList) {
+            System.out.println(count++ + ". " + menuItem);
+        }
+        System.out.println();
     }
 
     public void addDishToMenu() {
@@ -25,7 +43,6 @@ class Menu {
     }
 
     public void removeDishFromMenu() {
-        InputHandler inputHandler = new InputHandler();
         System.out.println("Add the dish´s name:");
         String dish = inputHandler.getStringInput().toLowerCase();
 
@@ -48,19 +65,66 @@ class Menu {
         }
     }
 
-    public void displayMenu() {
-        System.out.println("--- RESTAURANT MENU ---");
+    public void takeOrder() {
+        String idString = Integer.toString(orderManager.getId());
+        int totalSum = 0;
+        String order = "";
 
-        if(menuList.isEmpty()) {
-            System.out.println("No dishes are added yet!");
-            return;
+        displayMenu();
+
+        boolean isRunning = true;
+        while(isRunning) {
+            System.out.println("Add name of dish (x = finish):");
+            String dish = inputHandler.getStringInput();
+
+            if(dish.equals("x")) {
+                isRunning = false;
+                System.out.println();
+            } else {
+                order += dish + ",";
+
+                for(MenuItem item: menuList) {
+                    if(item.getDish().equals(dish)) {
+                        totalSum += item.getPrice();
+                    }
+                }
+            }
         }
 
-        int count = 1;
-        for(MenuItem menuItem : menuList) {
-            System.out.println(count++ + ". " + menuItem);
-        }
+        Order orderToAdd = new Order(idString, order, totalSum);
+        orderManager.addOrder(orderToAdd);
+        System.out.println(orderManager.getOrders(Integer.parseInt(idString) - 1));
         System.out.println();
+    }
+
+    public void serveOrder() {
+        orderManager.displayOrders();
+        System.out.println("Add number of order to serve:");
+        int num = inputHandler.getIntInput();
+        System.out.println();
+
+        for(Order order : orderManager.getOrders()) {
+            if(order.getId().equals(Integer.toString(num))) {
+                order.setServed(true);
+                orderManager.displayOrders();
+                System.out.println();
+            }
+        }
+    }
+
+    public void payOrder() {
+        orderManager.displayOrders();
+        System.out.println("Add number of order to pay:");
+        int num = inputHandler.getIntInput();
+        System.out.println();
+
+        for(Order order : orderManager.getOrders()) {
+            if(order.getId().equals(Integer.toString(num))) {
+                order.setPayed(true);
+                orderManager.displayOrders();
+                System.out.println();
+            }
+        }
     }
 
     public void run() {
@@ -70,13 +134,13 @@ class Menu {
             System.out.println("1. Display restaurant menu");
             System.out.println("2. Add dish");
             System.out.println("3. Remove dish");
-            System.out.println("4. Take order"); // <-- Kitchen: orderList(id, order, sum, isPayed, isServed, isCooked)
-            System.out.println("5. Take payment"); // <--- Kitchen orderList + mark as payed + remove
-            System.out.println("6. Ready for service"); // <--- Kitchen orderList + mark as served
+            System.out.println("4. Take order");
+            System.out.println("5. Ready for service");
+            System.out.println("6. Take payment");
             System.out.println("7. Back to main menu");
 
             InputHandler inputHandler = new InputHandler();
-            int choice = inputHandler.getIntInput(1, 6);
+            int choice = inputHandler.getIntInput(1, 7);
 
             switch (choice) {
                 case 1:
@@ -89,10 +153,15 @@ class Menu {
                     removeDishFromMenu();
                     break;
                 case 4:
+                    takeOrder();
                     break;
                 case 5:
+                    serveOrder();
                     break;
                 case 6:
+                    payOrder();
+                    break;
+                case 7:
                     running = false;
                     break;
                 default:
