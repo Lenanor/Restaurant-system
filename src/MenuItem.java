@@ -14,4 +14,9 @@ public class MenuItem {
     public int getPrice() {
         return price;
     }
+
+    @Override
+    public String toString() {
+        return dish + "___" + price + ":-";
+    }
 }
