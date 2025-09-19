@@ -2,7 +2,6 @@ import java.util.Scanner;
 
 class Restaurant {
     private boolean isOpen;
-   // private final OrderManager orderManager;
     private final Kitchen kitchen;
     private final Menu menu;
     private final Staff staff;
@@ -15,9 +14,6 @@ class Restaurant {
         this.menu = new Menu(orderManager);
         this.staff = new Staff();
         this.inputHandler = new InputHandler();
-        staff.addStaff(new Employee("100","Anna", "Dahl", "111-11111"));
-        staff.addStaff(new Employee("101", "Olle", "Berg", "222-22222"));
-        staff.addStaff(new Employee("102", "Kalle", "Borg", "333-333333"));
     }
 
     public void open() {
@@ -53,11 +49,12 @@ class Restaurant {
 
     public void run() {
         while(true) {
+            System.out.println();
             System.out.println("--- MAIN MENU ---");
             System.out.printf("1. Restaurant status %s%n", this.isOpen ? "🟢" : "🔴");
-            System.out.println("2. Manage kitchen");
-            System.out.println("3. Manage staff");
-            System.out.println("4. Manage menu");
+            System.out.println("2. Kitchen");
+            System.out.println("3. Staff");
+            System.out.println("4. Waiter");
             System.out.println("5. Exit");
 
             int choice = inputHandler.getIntInput(1, 5);

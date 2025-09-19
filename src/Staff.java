@@ -1,16 +1,16 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.Scanner;
 
 class Staff {
-    private List<Employee> staffList;
-    private InputHandler inputHandler;
-    private Scanner scanner = new Scanner(System.in);
+    private final List<Employee> staffList;
+    private final InputHandler inputHandler;
 
     public Staff() {
         this.staffList = new ArrayList<>();
         this.inputHandler = new InputHandler();
+        addStaff(new Employee("100","Lisa", "Dahl", "111-11111"));
+        addStaff(new Employee("101", "Olle", "Berg", "222-22222"));
+        addStaff(new Employee("102", "Kalle", "Borg", "333-333333"));
     }
 
     public void getStaffList() {
@@ -40,6 +40,7 @@ class Staff {
 
     public void run() {
         while(true) {
+            System.out.println();
             System.out.println("--- MANAGE STAFF ---");
             System.out.println("1. Display staff list");
             System.out.println("2. Add employee");
